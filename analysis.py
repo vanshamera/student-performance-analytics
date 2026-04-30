@@ -1,18 +1,27 @@
 import pandas as pd
 import matplotlib.pyplot as plt
 
-data = {
-    "Name": ["Aman", "Riya", "Vansh", "Rahul"],
-    "Math": [85, 90, 78, 88],
-    "Science": [80, 85, 75, 95],
-    "English": [78, 88, 80, 92]
-}
+# Load dataset
+df = pd.read_csv("student_data.csv")
 
-df = pd.DataFrame(data)
-df["Average"] = df[["Math","Science","English"]].mean(axis=1)
+# Calculate average score
+df["average"] = df[["math score","reading score","writing score"]].mean(axis=1)
 
-print(df.sort_values(by="Average", ascending=False))
+# Top 3 students
+top_students = df.sort_values(by="average", ascending=False).head(3)
 
-df.plot(x="Name", y=["Math","Science","English"])
-plt.title("Student Performance")
+# Subject averages
+subject_avg = df[["math score","reading score","writing score"]].mean()
+
+# Weakest subject
+weakest_subject = subject_avg.idxmin()
+
+print("Top Students:\n", top_students)
+print("\nSubject Averages:\n", subject_avg)
+print("\nWeakest Subject:", weakest_subject)
+
+# Visualization
+subject_avg.plot(kind="bar")
+plt.title("Average Scores per Subject")
+plt.savefig("performance.png")
 plt.show()
