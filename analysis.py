@@ -15,7 +15,10 @@ subject_avg = df[["math score","reading score","writing score"]].mean()
 
 # Weakest subject
 weakest_subject = subject_avg.idxmin()
-
+# Assign grades
+df["grade"] = df["average"].apply(
+    lambda x: "A" if x >= 85 else "B" if x >= 70 else "C"
+)
 print("Top Students:\n", top_students)
 print("\nSubject Averages:\n", subject_avg)
 print("\nWeakest Subject:", weakest_subject)
